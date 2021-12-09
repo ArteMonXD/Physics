@@ -5,23 +5,20 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     public float powerExplosion;
-    public float radius;
-    private Rigidbody[] explosiveRb;
+    private SphereCollider sphereCollider;
+    public List<Rigidbody> explosiedObjects = new List<Rigidbody>();
     void Start()
     {
-        explosiveRb = FindObjectsOfType<Rigidbody>();
+        sphereCollider = GetComponent<SphereCollider>();
     }
     
     public void Boom()
     {
-        foreach(Rigidbody rb in explosiveRb)
+        foreach(Rigidbody rb in explosiedObjects)
         {
             float distance = Vector3.Distance(transform.position, rb.transform.position);
-            if(distance <= radius)
-            {
-                Vector3 direction = rb.transform.position - transform.position;
-                rb.AddForce(direction.normalized * (powerExplosion * (radius - distance)), ForceMode.Impulse);
-            }
+            Vector3 direction = rb.transform.position - transform.position;
+            rb.AddForce(direction.normalized * (powerExplosion * (sphereCollider.radius - distance)), ForceMode.Impulse);
         }
     }
 }

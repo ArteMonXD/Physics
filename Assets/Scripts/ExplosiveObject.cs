@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class ExplosiveObject : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if(other.gameObject.layer == LayerMask.NameToLayer("Explosion"))
+        {
+            Explosion explosion = other.gameObject.GetComponent<Explosion>();
+            explosion.explosiedObjects.Add(GetComponent<Rigidbody>());
+        }
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider other)
     {
-        
+        if (other.gameObject.layer == LayerMask.NameToLayer("Explosion"))
+        {
+            Explosion explosion = other.gameObject.GetComponent<Explosion>();
+            explosion.explosiedObjects.Remove(GetComponent<Rigidbody>());
+        }
     }
 }
