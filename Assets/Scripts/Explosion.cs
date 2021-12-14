@@ -17,7 +17,7 @@ public class Explosion : MonoBehaviour
         foreach(Rigidbody rb in explosiedObjects)
         {
             float distance = Vector3.Distance(transform.position, rb.transform.position);
-            Vector3 direction = rb.transform.position - transform.position;
+            Vector3 direction = transform.position - rb.transform.position;
             rb.AddForce(direction.normalized * (powerExplosion * (sphereCollider.radius - distance)), ForceMode.Impulse);
         }
     }
